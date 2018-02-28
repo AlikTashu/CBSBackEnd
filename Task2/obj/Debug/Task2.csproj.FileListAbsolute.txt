@@ -1,0 +1,6 @@
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task2\bin\Debug\Task2.exe.config
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task2\bin\Debug\Task2.exe
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task2\bin\Debug\Task2.pdb
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task2\obj\Debug\Task2.csproj.CoreCompileInputs.cache
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task2\obj\Debug\Task2.exe
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task2\obj\Debug\Task2.pdb

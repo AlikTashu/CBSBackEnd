@@ -1,0 +1,7 @@
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task3\bin\Debug\Task3.exe.config
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task3\bin\Debug\Task3.exe
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task3\bin\Debug\Task3.pdb
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task3\obj\Debug\Task3.csprojResolveAssemblyReference.cache
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task3\obj\Debug\Task3.csproj.CoreCompileInputs.cache
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task3\obj\Debug\Task3.exe
+D:\Прога\Курсы\Тестовое задание\CBSBackEnd\Task3\obj\Debug\Task3.pdb

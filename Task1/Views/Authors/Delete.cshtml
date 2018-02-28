@@ -1,0 +1,43 @@
+﻿@model Task1.Models.Author
+
+@{
+    ViewBag.PageTitle = "Удаление автора";
+}
+
+<h3>Вы уверенны, что хотите удалить автора?</h3>
+<div>
+    <hr />
+    <div id="author">
+        <div class="field_pair">
+            <label class="field_label">Имя</label>
+            @Html.DisplayFor(m => m.Name, new { htmlAttributes = new { @class = "author_display" } })
+        </div>
+
+        <div class="field_pair">
+            <label class="field_label">Фамилия</label>
+            @Html.DisplayFor(m => m.Surname, new { htmlAttributes = new { @class = "author_display" } })
+        </div>
+
+        <div class="field_pair">
+            <label class="field_label">Отчество</label>
+            @Html.DisplayFor(m => m.Patronymic, new { htmlAttributes = new { @class = "author_display" } })
+        </div>
+
+        <div class="field_pair">
+            <label class="field_label">Дата рождения</label>
+            @Html.DisplayFor(m => m.DateOfBitrh, new { htmlAttributes = new { @class = "author_display" } })
+        </div>
+    </div>
+    <hr/>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn-link" /> |
+            @Html.ActionLink("Назад к списку", "Index")
+        </div>
+    }
+    <link href="~/Content/Author.css" rel="stylesheet" />
+</div>

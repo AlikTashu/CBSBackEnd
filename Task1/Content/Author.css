@@ -1,0 +1,26 @@
+﻿.book {
+    border: solid 1px black;
+    padding: 5px;
+    margin: 5px;
+    width: 400px;
+}
+
+.field_label {
+    width: 13em;
+    margin-right: 10px;
+    float: left;
+}
+.book_label {
+    width: 13em;
+    margin-right: 10px;
+}
+span{
+    word-wrap: break-word;
+}
+.field_input {
+    width: 15em;
+}
+
+.field_pair {
+    margin-bottom: 10px;
+}

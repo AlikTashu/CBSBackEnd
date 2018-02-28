@@ -1,0 +1,156 @@
+﻿@model Task1.Models.Author
+
+@{
+    ViewBag.PageTitle = "Новый автор";
+}
+
+<h2>Новый автор</h2>
+
+@using (Html.BeginForm("Create", "Authors", FormMethod.Post, htmlAttributes: new { @id = "author_form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", htmlAttributes: new { @class = "field-validation-error" })
+    <h3>Автор</h3>
+    <hr />
+    <div id="author">
+        <div class="field_pair">
+            <label class="field_label">Имя</label>
+            @Html.TextBoxFor(m => m.Name, htmlAttributes: new { @class = "field_input" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+
+        <div class="field_pair">
+            <label class="field_label">Фамилия</label>
+            @Html.TextBoxFor(m => m.Surname, htmlAttributes: new { @class = "field_input" })
+            @Html.ValidationMessageFor(m => m.Surname)
+        </div>
+
+        <div class="field_pair">
+            <label class="field_label">Отчество</label>
+            @Html.TextBoxFor(m => m.Patronymic, htmlAttributes: new { @class = "field_input" })
+            @Html.ValidationMessageFor(m => m.Patronymic)
+        </div>
+
+        <div class="field_pair">
+            <label class="field_label">Дата рождения</label>
+            @Html.EditorFor(m => m.DateOfBitrh, new { htmlAttributes = new { @class = "field_input" } })
+            @Html.ValidationMessageFor(m => m.DateOfBitrh)
+        </div>
+    </div>
+
+    <h3>Произведения</h3>
+    <span class="btn-link" id="addBookBtn" data-toggle="modal" data-target="#newBookPopup">Добавить книгу</span>
+    <hr />
+
+    @Html.DisplayAuthorsBooks(@Model.Books)
+    <!--Submit btton -->
+    <div class="form-group" style="margin: 10px;">
+        <div style="position: absolute; left: 20px;">
+            @Html.ActionLink("Назад к списку", "Index")
+        </div>
+        <div style="width: inherit">
+            <input id="saveBtn" type="submit" value="Сохранить" style="width: 100px; height: 30px; position:absolute; right:0" />
+        </div>
+    </div>
+}
+
+<!--Popup form for creating a new book-->
+<div id="newBookPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="display:inline-block;padding: 20px">
+            <div class="modal-body" id="newBookForm" style="width: 300px">
+                <div class="form-horizontal">
+                    @using (Ajax.BeginForm(new AjaxOptions()
+                    {
+                        Url = Url.Action("AddBook", "Authors"),
+                        OnSuccess = "parseJson"
+                    }))
+                    {
+                        @Html.Hidden("AuthorId", Model.Id)
+                        @Html.Hidden("Author", Model)
+
+                        <div class="form-group">
+                            <div>
+                                @Html.Label("Название")
+                            </div>
+                            <div>
+                                @Html.Editor("Title", new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div>
+                                @Html.Label("Жанр")
+                            </div>
+                            <div>
+                                @Html.Editor("Genre", new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div>
+                                @Html.Label("Количество страниц")
+                            </div>
+                            <div>
+                                @Html.Editor("Pages", new { htmlAttributes = new { @type = "number", @min =  0, @step = "1", @value = "0", @class = "form-control" } })
+                            </div>
+                        </div>
+
+                        <div class="" style="margin-left: -15px; margin-right: -5px; display: flex; flex-direction: row; justify-content: space-between ">
+                            <input type="submit" class="btn btn-default" value="Сохранить" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles{
+    <style>
+        #author_form {
+            width: 405px;
+            position: relative;
+        }
+    </style>
+}
+@section Scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+
+        //function that parses json from server response and appends created markup to #books_container div
+        function parseJson(data) {
+            var insertTo = $("#books_container");
+
+            var lastBook = $("#books_container").children().last();
+            var id = parseInt($("input[data-num]:first", lastBook).attr("data-num"),10) + 1;
+            var pages = data.Pages != null ? data.Pages : "";
+
+            if (isNaN(id)) {
+                id = 0;
+            }
+
+          var str = `<div class="book">
+                <input data-val="true" data-val-number="Значением поля AuthorId должно быть число." data-val-required="Требуется поле AuthorId." id="Books_${id}__AuthorId" name="Books[${id}].AuthorId" type="hidden" value="@Model.Id" />
+                <input data-num="${id}" data-val="true" data-val-number="Значением поля Id должно быть число." data-val-required="Требуется поле Id." id="Books_${id}__Id" name="Books[${id}].Id" type="hidden" value="-1" />
+                <div>
+                    <label class = "book_label">Название</label>
+                    <span class = "field_input">${data.Title}</span>
+                    <input id="Books_${id}__Title" name="Books[${id}].Title" type="hidden" value="${data.Title}" />
+                </div>
+                <div>
+                    <label class = "book_label">Жанр</label>
+                    <span class = "field_input">${data.Genre}</span>
+                    <input id="Books_${id}__Genre" name="Books[${id}].Genre" type="hidden" value="${data.Genre}" />
+                </div>
+                <div>
+                    <label class = "book_label">Количество страниц</label>
+                    <span class = "field_input">${pages}</span>
+                    <input data-val="true" data-val-number="Значением поля Pages должно быть число." id="Books_${id}__Pages" name="Books[${id}].Pages" type="hidden" value="${pages}" />
+                </div>
+            </div>`
+            insertTo.append(str);
+        }
+
+    </script>
+}
